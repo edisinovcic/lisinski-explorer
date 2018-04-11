@@ -1,22 +1,23 @@
-FROM node:8.9.3
+FROM registry.access.redhat.com/rhscl/nodejs-8-rhel7:1-11
 
-RUN mkdir -p /el && mkdir -p /el/data 
+MAINTAINER DPP <contact@dapowerplay.com>
 
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
+ADD . /opt/app-root/
 
-ADD . /el/
-
-WORKDIR /el/
-
-# RUN git submodule init && git submodule update && git submodule status
-
-RUN chown -R 1000920000:0 /el/
-
-RUN npm install && npm cache clean --force
+WORKDIR /opt/app-root/
 
 EXPOSE 3000
 
-USER 1000920000
+USER 1001
+
+RUN bash -c "npm install" && \
+    bash -c "npm cache clean --force"
+
+RUN fix-permissions /opt/app-root
 
 CMD [ "npm", "start" ]
+
+
+
+
+
