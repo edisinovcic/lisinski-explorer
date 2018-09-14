@@ -7,7 +7,7 @@
 
 ### Configuring
 
-Check out /config.js and /names/names.json to configure the explorer.
+Check out [config.js](config.js) and [names.json](names/names.json) to configure the explorer.
 
 
 
