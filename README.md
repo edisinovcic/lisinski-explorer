@@ -1,3 +1,16 @@
+# Görli explorer
+
+### Build non-root RHEL Docker Image
+```bash
+./build
+```
+
+### Configuring
+
+Check out /config.js and /names/names.json to configure the explorer.
+
+
+
 # Etherchain Light
 ### Lightweight blockchain explorer for your private Ethereum chain
 
