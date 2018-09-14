@@ -1,6 +1,58 @@
 extends layout
 
 block content
+  .page-header
+    h1
+      | Görli Explorer   
+      small A cross-client proof-of-authority ethereum testnet
+  .fifi
+      .row
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Görli call for participation:
+                              a.btn.btn-default.ctabuttons(href='https://dev.to/5chdn/the-grli-testnet-proposal---a-call-for-participation-58pf' role='button')
+                                span.glyphicon.glyphicon-bullhorn(aria-hidden='true')
+                                |  Read More
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Help with the Aura spec:
+                              a.btn.btn-default.ctabuttons(href='https://github.com/goerli/eips-aura-spec/blob/master/EIPS/eip-aura.md' role='button')
+                                span.glyphicon.glyphicon-book(aria-hidden='true')
+                                |  Improve EIP
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Run a Görli node:
+                              a.btn.btn-default.ctabuttons(href='https://github.com/goerli/testnet' role='button')
+                                span.glyphicon.glyphicon-play(aria-hidden='true')
+                                |  Run Node
+
+      .row
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Report to the dashboard:
+                              a.btn.btn-default.ctabuttons(href='http://ethstats.goerli.ethberl.in:3000/' role='button')
+                                span.glyphicon.glyphicon-globe(aria-hidden='true')
+                                |  EthStats
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Contribute to Geth Aura:
+                              a.btn.btn-default.ctabuttons(href='https://github.com/goerli/go-ethereum-aura/tree/aura-dev' role='button')
+                                span.glyphicon.glyphicon-console(aria-hidden='true')
+                                |  Github
+                             
+        .col-sm-6.col-md-4
+                          .thumbnail
+                            .caption
+                              p.thumbnailtext Join the chat:
+                              a.btn.btn-default.ctabuttons(href='https://gitter.im/goerli' role='button')
+                                span.glyphicon.glyphicon-user(aria-hidden='true')
+                                |  Gitter
+     
   h3 Recent blocks
   table.table
     thead
