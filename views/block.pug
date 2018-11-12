@@ -23,6 +23,9 @@ block content
       td  
         a(href="/account/" + block.author) #{nameformatter.format(block.author)}
     tr
+      td Extra Data:
+      td #{block.extraData}
+    tr
       td Gas Limit:
       td #{numeral(block.gasLimit).format()}
     tr
