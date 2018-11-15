@@ -43,7 +43,7 @@ function formatBlock(block) {
 
   block.signer = address;
 
-  block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 65)
+  block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64)
 
   block.extraDataSeal = seal.toString('hex')
 

@@ -7,6 +7,11 @@ block content
       a.btn.btn-default(href="/block/" + (block.number.toNumber() - 1), role="button") Previous
     .col-md-10.text-center
       h3 Block #{block.number}
+      if block._extraextra.length
+        span.glyphicon.glyphicon-globe(aria-hidden='true')
+        |  Checkpoint Block
+
+
     .col-md-1
       a.btn.btn-default(href="/block/" + (block.number.toNumber() + 1), role="button") Next
 
@@ -32,7 +37,7 @@ block content
     if block._extraextra.length
       tr
         td Extra Data (Signer list): 
-        td #{block._extraextra}
+        td #{block._extraextra} 
     tr
       td Extra Data (Seal):
       td #{block.extraDataSeal}
