@@ -1,55 +1,44 @@
 var express = require('express');
 var router = express.Router();
-
-var async = require('async');
-var Web3 = require('web3');
-
+var Api = require('@parity/api')
+var format = require('../utils/blockformatter.js')
 
 router.get('/', function(req, res, next) {
   
   var config = req.app.get('config');  
-  var web3 = new Web3();
-  web3.setProvider(config.provider);
-  
-  async.waterfall([
-    function(callback) {
-      web3.eth.getBlock("latest", false, function(err, result) {
-        callback(err, result);
-      });
-    }, function(lastBlock, callback) {
-      var blocks = [];
+
+  const provider = new Api.Provider.Http(config.rpcPath);
+  const api = new Api(provider);
+
+  api.eth.getBlockByNumber('latest', true).then((lastBlock) => {
+   
+      var jobs = []
       
       var blockCount = 10;
       
       if (lastBlock.number - blockCount < 0) {
         blockCount = lastBlock.number + 1;
       }
-      
-      async.times(blockCount, function(n, next) {
-        web3.eth.getBlock(lastBlock.number - n, true, function(err, block) {
-          next(err, block);
+
+      for (var i = 0; i < blockCount; i++) {
+        jobs.push(api.eth.getBlockByNumber(lastBlock.number - i))
+      };
+
+      Promise.all(jobs).then(blocks => { 
+        var txs = [];
+        blocks.forEach(function(block) {
+          block.transactions.forEach(function(tx) {
+            if (txs.length === 10) {
+              return;
+            }
+            txs.push(tx);
+          });
+          block = format(block)
         });
-      }, function(err, blocks) {
-        callback(err, blocks);
-      });
-    }
-  ], function(err, blocks) {
-    if (err) {
-      return next(err);
-    }
-    
-    var txs = [];
-    blocks.forEach(function(block) {
-      block.transactions.forEach(function(tx) {
-        if (txs.length === 10) {
-          return;
-        }
-        txs.push(tx);
-      });
-    });
-    res.render('index', { blocks: blocks, txs: txs });
-  });
-  
+        res.render('index', { blocks: blocks, txs: txs });
+      })
+  })
+
 });
 
 module.exports = router;

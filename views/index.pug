@@ -5,33 +5,31 @@ block content
     h1
       | Görli Explorer   
       small A cross-client proof-of-authority ethereum testnet
-  .fifi
+  .page-boombox
       .row
-        .col-sm-6
+        .col-sm-3
                           .thumbnail
                             .caption
                               p.thumbnailtext Görli call for participation:
                               a.btn.btn-default.ctabuttons(href='https://dev.to/5chdn/the-grli-testnet-proposal---a-call-for-participation-58pf' role='button')
                                 span.glyphicon.glyphicon-bullhorn(aria-hidden='true')
                                 |  Read More
-        .col-sm-6
+        .col-sm-3
                           .thumbnail
                             .caption
                               p.thumbnailtext Run a Görli node:
                               a.btn.btn-default.ctabuttons(href='https://github.com/goerli/testnet' role='button')
                                 span.glyphicon.glyphicon-play(aria-hidden='true')
                                 |  Run Node
-
-      .row
-        .col-sm-6
+        .col-sm-3
                           .thumbnail
                             .caption
                               p.thumbnailtext Report to the dashboard:
-                              a.btn.btn-default.ctabuttons(href='http://ethstats.goerli.ethberl.in:3000/' role='button')
+                              a.btn.btn-default.ctabuttons(href='http://stats.goerli.net/' role='button')
                                 span.glyphicon.glyphicon-globe(aria-hidden='true')
                                 |  EthStats
                              
-        .col-sm-6
+        .col-sm-3
                           .thumbnail
                             .caption
                               p.thumbnailtext Join the chat:
@@ -44,7 +42,7 @@ block content
     thead
       tr
         th Number
-        th Miner
+        th Signer
         th Timestamp
         th # Tx
         th # Uncles
@@ -54,8 +52,8 @@ block content
           td
             a(href="/block/" + block.number) #{block.number}
           td 
-            a(href="/account/" + block.author) #{nameformatter.format(block.author)}
-          td #{moment.unix(block.timestamp).format()}
+            a(href="/account/" + block.signer) #{nameformatter.format(block.signer)}
+          td #{moment(block.timestamp).format('lll')} (#{moment(block.timestamp).fromNow()})
           td #{block.transactions.length}
           td #{block.uncles.length}
   h3 Recent Transactions

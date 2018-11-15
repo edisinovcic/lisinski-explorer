@@ -3,29 +3,25 @@ var router = express.Router();
 
 var async = require('async');
 var Web3 = require('web3');
+var format = require('../utils/blockformatter.js')
+
+var Api = require('@parity/api')
 
 router.get('/:block', function(req, res, next) {
   
   var config = req.app.get('config');  
-  var web3 = new Web3();
-  web3.setProvider(config.provider);
-  
-  async.waterfall([
-    function(callback) {
-      web3.eth.getBlock(req.params.block, true, function(err, result) {
-        callback(err, result);
-      });
-    }, function(result, callback) {
-      if (!result) {
+
+  const provider = new Api.Provider.Http(config.rpcPath);
+  const api = new Api(provider);
+
+  Promise
+  .all([
+    api.eth.getBlockByNumber(req.params.block, true),
+    api.trace.block(req.params.block)
+  ])
+  .then(([block, traces]) => {
+    if (!block) {
         return next({name : "BlockNotFoundError", message : "Block not found!"});
-      }
-      web3.trace.block(result.number, function(err, traces) {
-        callback(err, result, traces);
-      });
-    }
-  ], function(err, block, traces) {
-    if (err) {
-      return next(err);
     }
     
     block.transactions.forEach(function(tx) {
@@ -44,7 +40,13 @@ router.get('/:block', function(req, res, next) {
       }
       // console.log(tx);
     });
+
+    block = format(block); 
+
+    block.signerName = config.names[block.signer];
+
     res.render('block', { block: block });
+
   });
   
 });

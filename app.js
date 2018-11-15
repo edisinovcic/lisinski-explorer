@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.locals.moment = require('moment');
 app.locals.numeral = require('numeral');
 app.locals.ethformatter = require('./utils/ethformatter.js');

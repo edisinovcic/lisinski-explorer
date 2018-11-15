@@ -6,6 +6,19 @@ var Web3 = require('web3');
 
 router.get('/:account', function(req, res, next) {
   
+
+  if (req.params.account.length === 40 )
+    req.params.account = '0x' + req.params.account;
+
+  // not a valid account
+  if(req.params.account.length != 42) {
+    var err = new Error ('Not valid')
+    err.status = 400
+    res.render('error',{message : "Account format not valid.", error : err});
+    return
+  }
+
+
   var config = req.app.get('config');  
   var web3 = new Web3();
   web3.setProvider(config.provider);
