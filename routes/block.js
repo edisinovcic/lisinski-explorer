@@ -8,21 +8,28 @@ var format = require('../utils/blockformatter.js')
 var Api = require('@parity/api')
 
 router.get('/:block', function(req, res, next) {
+
+  //get 
   
   var config = req.app.get('config');  
 
-  const provider = new Api.Provider.Http(config.rpcPath);
+  const provider = new Api.Provider.Http(config.rpc.parity);
   const api = new Api(provider);
+
+  const provider2 = new Api.Provider.Http(config.rpc.pantheon);
+  const api2 = new Api(provider2);
 
   Promise
   .all([
-    api.eth.getBlockByNumber(req.params.block, true),
+    api2.eth.getBlockByNumber(req.params.block, true),
     api.trace.block(req.params.block)
   ])
   .then(([block, traces]) => {
     if (!block) {
         return next({name : "BlockNotFoundError", message : "Block not found!"});
     }
+
+  
     
     block.transactions.forEach(function(tx) {
       tx.traces = [];
@@ -41,11 +48,10 @@ router.get('/:block', function(req, res, next) {
       // console.log(tx);
     });
 
-    block = format(block); 
-
+    block = format(block)
     block.signerName = config.names[block.signer];
 
-    res.render('block', { block: block });
+    res.render('block', { block: block });    
 
   });
   
@@ -74,7 +80,7 @@ router.get('/uncle/:hash/:number', function(req, res, next) {
       return next(err);
     }
      
-    console.log(uncle);
+    
     
     res.render('uncle', { uncle: uncle, blockHash: req.params.hash });
   });

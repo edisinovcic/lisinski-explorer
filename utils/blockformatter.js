@@ -1,59 +1,70 @@
 const utils = require('ethereumjs-util')
-const BlockHeader = require('ethereumjs-block/header')
+const ethBlock = require('ethereumjs-block/from-rpc')
 const moment = require('moment');
+var config = new(require('../config.js'))();
+
+
+
+var Api = require('@parity/api')
+const provider = new Api.Provider.Http(config.rpc.pantheon);
+const api = new Api(provider);
 
 function formatBlock(block) {
-	
+       const dataBuff = utils.toBuffer(block.extraData)
+       const seal = dataBuff.slice(dataBuff.length - 65, dataBuff.length)
+       const sig = utils.fromRpcSig(dataBuff.slice(dataBuff.length - 65, dataBuff.length))
 
-  const dataBuff = utils.toBuffer(block.extraData)
-  const seal = dataBuff.slice(dataBuff.length - 65, dataBuff.length)
-  const sig = utils.fromRpcSig(dataBuff.slice(dataBuff.length - 65, dataBuff.length))
+        block.mixHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    
+        if(block.nonce.toString(16) === '0') {
+            block.nonce = '0x0000000000000000'
+        } else {
+            block.nonce = '0x' + block.nonce.toString(16);
+        }
+    
+
+       block.signer = extractSigner(block);
+
+       block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64)
+
+       block.extraDataSeal = seal.toString('hex')
+
+       block._extraextra = dataBuff.slice(32,dataBuff.length - 65).toString('hex')
+    
+       return block 
+}
+
+function extractSigner(block_) {
 
 
-  block.extraData = '0x' + utils.toBuffer(block.extraData).slice(0, dataBuff.length - 65).toString('hex')
+  var block = Object.assign({}, block_);
+  block.difficulty = '0x' + block.difficulty.toString(16)
+  block.totalDifficulty = '0x' + block.totalDifficulty.toString(16)
+  block.number = '0x' + block.number.toString(16)
+  block.gasLimit = '0x' + block.gasLimit.toString(16)
+  block.gasUsed = '0x' + block.gasUsed.toString(16)
+  block.timestamp = moment(block.timestamp).unix()
+
+  var sealers = block.extraData
+  if (sealers.length <= 130)
+    return undefined
+  var sig = utils.fromRpcSig('0x' + sealers.substring(sealers.length - 130, sealers.length)) // remove signature
+  block.extraData = block.extraData.substring(0, block.extraData.length - 130)
   
-  block.mixHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
-  block.nonce = '0x0000000000000000';
+  var blk = ethBlock(block)
 
-  moment(block.timestamp)
-
-  const headerHash = new BlockHeader({
-    parentHash: utils.toBuffer(block.parentHash),
-    uncleHash: utils.toBuffer(block.sha3Uncles),
-    coinbase: utils.toBuffer(block.miner),
-    stateRoot: utils.toBuffer(block.stateRoot),
-    transactionTrie: Buffer.from(block.transactionsRoot.replace('0x', ''), 'hex'),
-    receiptTrie: utils.toBuffer(block.receiptsRoot),
-    bloom: utils.toBuffer(block.logsBloom),
-    difficulty: utils.toBuffer(block.difficulty.toNumber()),
-    number: utils.toBuffer(block.number.toNumber()),
-    gasLimit: utils.toBuffer(block.gasLimit.toNumber()),
-    gasUsed: utils.toBuffer(block.gasUsed.toNumber()),
-    timestamp: utils.toBuffer(moment(block.timestamp).unix()),
-    extraData: utils.toBuffer(block.extraData),
-    mixHash: utils.toBuffer(block.mixHash),
-    nonce: utils.toBuffer(block.nonce)
-  })
-
-  const pub = utils.ecrecover(headerHash.hash(), sig.v, sig.r, sig.s)
-
-  const address = utils.addHexPrefix(utils.pubToAddress(pub).toString('hex'))
-
-  // console.log(address) 
-
-  block.signer = address;
-
-  block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64)
-
-  block.extraDataSeal = seal.toString('hex')
-
-  block._extraextra = dataBuff.slice(32,dataBuff.length - 65).toString('hex')
-
+  blk.header.difficulty[0] = block.difficulty
+  var sigHash = utils.sha3(blk.header.serialize())
+  var pubkey
+  var address
+  try {
+    pubkey = utils.ecrecover(sigHash, sig.v, sig.r, sig.s)
+    address = utils.addHexPrefix(utils.pubToAddress(pubkey).toString('hex'))
+  } catch (e) {
+    address = ''
+  }
+  return address;
   
-  return block
 }
 
 module.exports = formatBlock;
-
-
-

@@ -59,6 +59,6 @@ typings/
 
 # Data directory
 data/
-
-
+scripts/
 .well-known
+

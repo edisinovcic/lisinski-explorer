@@ -1,3 +1,5 @@
+var format = require('../utils/blockformatter.js')
+
 var express = require('express');
 var router = express.Router();
 var Api = require('@parity/api')
@@ -7,12 +9,13 @@ router.get('/', function(req, res, next) {
   
   var config = req.app.get('config');  
 
-  const provider = new Api.Provider.Http(config.rpcPath);
+  const provider = new Api.Provider.Http(config.rpc.pantheon);
   const api = new Api(provider);
 
   api.eth.getBlockByNumber('latest', true).then((lastBlock) => {
    
       var jobs = []
+      
       
       var blockCount = 10;
       
@@ -31,10 +34,14 @@ router.get('/', function(req, res, next) {
             if (txs.length === 10) {
               return;
             }
+            
             txs.push(tx);
+           
+            
           });
           block = format(block)
         });
+        
         res.render('index', { blocks: blocks, txs: txs });
       })
   })
