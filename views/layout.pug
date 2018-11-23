@@ -87,6 +87,9 @@ html(lang="en")
     div.container
       hr
       footer
+        p
+          |  | #{nodeStatus.version} | #{nodeStatus.nbrPeers} Peers connected
+        p
+          |  | #{nodeStatus.version2} | #{nodeStatus.nbrPeers2} Peers connected
         p  
           a(href=config.legalNoticeLink) Legal Notices
-          |  | #{nodeStatus.version} | #{nodeStatus.nbrPeers} Peers connected

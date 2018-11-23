@@ -2,6 +2,9 @@ const utils = require('ethereumjs-util')
 const ethBlock = require('ethereumjs-block/from-rpc')
 const moment = require('moment');
 var config = new(require('../config.js'))();
+var Web3 = require('web3');
+
+var web3 = new Web3()
 
 
 
@@ -25,7 +28,8 @@ function formatBlock(block) {
 
        block.signer = extractSigner(block);
 
-       block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64)
+       block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64) 
+       block.extraDataVanityToAscii = web3.toAscii(block.extraDataVanity)
 
        block.extraDataSeal = seal.toString('hex')
 
