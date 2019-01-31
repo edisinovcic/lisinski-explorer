@@ -15,7 +15,7 @@ block content
     .col-md-1
       a.btn.btn-default(href="/block/" + (block.number.toNumber() + 1), role="button") Next
 
-  table.table
+  table.table.table-hover
     tr
       td Hash:
       td #{block.hash}
@@ -34,8 +34,8 @@ block content
     tr
       td Extra Data (Vanity):
       td #{block.extraDataVanity}
-    tr
-      td Extra Data (Vanity) Ascii:
+    tr.something
+      td.col-md-3 Extra Data (Vanity) Ascii:
       td #{block.extraDataVanityToAscii}
     if block._extraextra.length
       tr

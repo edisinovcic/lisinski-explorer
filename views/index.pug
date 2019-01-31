@@ -54,7 +54,7 @@ block content
             td
               a(href="/block/" + block.number) #{block.number}
             td 
-              a(href="/account/" + block.signer) #{nameformatter.format(block.signer)}
+              a(href="/account/" + block.signer) #{block.signerName}
             td #{moment(block.timestamp).format('lll')} (#{moment(block.timestamp).fromNow()})
             td #{block.transactions.length}
             td #{block.uncles.length}

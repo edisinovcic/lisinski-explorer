@@ -18,8 +18,8 @@ function formatBlock(block) {
        const sig = utils.fromRpcSig(dataBuff.slice(dataBuff.length - 65, dataBuff.length))
 
         block.mixHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
-    
-        if(block.nonce.toString(16) === '0') {
+        console.log(block)
+        if(typeof block.nonce === 'undefined' || block.nonce.toString(16) === '0') {
             block.nonce = '0x0000000000000000'
         } else {
             block.nonce = '0x' + block.nonce.toString(16);

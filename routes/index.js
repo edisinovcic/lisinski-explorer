@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
   
   var config = req.app.get('config');  
 
-  const provider = new Api.Provider.Http(config.rpc.pantheon);
+  const provider = new Api.Provider.Http(config.rpc.parity);
   const api = new Api(provider);
-
+  
   api.eth.getBlockByNumber('latest', true).then((lastBlock) => {
    
       var jobs = []
@@ -40,6 +40,7 @@ router.get('/', function(req, res, next) {
             
           });
           block = format(block)
+          block.signerName = config.names[block.signer];
         });
         
         res.render('index', { blocks: blocks, txs: txs });
