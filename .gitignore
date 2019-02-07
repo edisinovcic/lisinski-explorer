@@ -62,3 +62,6 @@ data/
 scripts/
 .well-known
 
+# IDE directories
+.idea/
+
