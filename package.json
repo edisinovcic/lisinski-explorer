@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon --watch ../ ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -25,5 +26,8 @@
     "solc": "^0.5.3",
     "string-similarity": "^1.1.0",
     "web3": "git+https://github.com:DAPowerPlay/web3.js.git#develop"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
