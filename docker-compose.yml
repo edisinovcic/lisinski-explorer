@@ -6,11 +6,17 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    command: npm run dev
     depends_on:
       - parity-rpc
       - pantheon-rpc
+    volumes:
+      - .:/usr/app
+      - explorer-node-modules:/usr/app/node_modules
     ports:
       - ${SERVER_HOST_PORT-3000}:3000
+    environment:
+      - DEBUG=*
 
   parity-rpc:
     image: nodefactory/parity-goerly:alpine-clique-v5
@@ -26,5 +32,6 @@ services:
 
 
 volumes:
+  explorer-node-modules:
   parity-chain-data:
   pantheon-chain-data:
