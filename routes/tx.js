@@ -82,9 +82,15 @@ router.get('/:tx', function(req, res, next) {
         callback(err, tx, receipt, traces);
       });
     }, function(tx, receipt, traces, callback) {
-      db.get(tx.to, function(err, value) {
-        callback(null, tx, receipt, traces, value);
-      });
+      try {
+        db.get(tx.to, function(err, value) {
+          callback(null, tx, receipt, traces, value);
+        });
+      } catch (e) {
+        // contract creation, to = null
+        callback(null, tx, receipt, traces, null);
+      }
+
     }
   ], function(err, tx, receipt, traces, source) {
     if (err) {
