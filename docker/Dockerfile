@@ -1,24 +1,32 @@
-FROM registry.access.redhat.com/rhscl/nodejs-8-rhel7:1-11
+FROM node:carbon-alpine as builder
 
 MAINTAINER DPP <contact@dapowerplay.com>
 
-COPY package.json /opt/app-root/
-COPY package-lock.json /opt/app-root/
+RUN apk add --no-cache --virtual dep python make g++ git
 
-WORKDIR /opt/app-root/
+WORKDIR /usr/app
 
-EXPOSE 3000
+# Install node dependencies - done in a separate step so Docker can cache it.
+COPY packag*.json ./
 
-USER 1001
+RUN npm install --from-lock-file
 
-RUN bash -c "npm install --from-lockfile" && \
-    bash -c "npm cache clean --force"
+
+FROM node:carbon-alpine as app
+
+WORKDIR /usr/app
+
+COPY --from=builder /usr/app/node_modules/ ./node_modules
 
 COPY . .
 
-RUN fix-permissions /opt/app-root
+RUN chown -R node:node .
 
-CMD [ "npm", "start" ]
+USER node
+
+EXPOSE 3000
+
+CMD ["node", "./bin/www"]
 
 
 

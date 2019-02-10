@@ -66,5 +66,7 @@ Supported Ethereum backend nodes: Parity (Geth is currently not supported as it 
 ### Setup using docker
 
 1. Clone this repository to your local machine: `git clone https://github.com/DAPowerPlay/goerli-explorer --recursive` (Make sure to include `--recursive` in order to fetch the solc-bin git submodule)
-2. Run `docker-compose build` to build container with all dependencies
-3. Run `docker-compose up` to startup rpc nodes and explorer. Your app will be available on [loclhost:3000](http://localhost:3000). You can update port by setting `SERVER_HOST_PORT` env variable.
+2. Run `make build` to build container with all dependencies
+3. Run `make start` to startup rpc nodes and explorer. Your app will be available on [loclhost:3000](http://localhost:3000). You can update port by setting `SERVER_HOST_PORT` env variable.
+4. Create production image with `make release`
+##### Notice - image needs to be rebuild(`make build`) on each dependency update
