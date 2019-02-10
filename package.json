@@ -1,5 +1,5 @@
 {
-  "name": "etherchain-light",
+  "name": "goerli-explorer",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,8 +12,6 @@
     "bignumber.js": "^4.0.0",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.6.0",
-    "ethereumjs-abi": "git+https://github.com/gobitfly/ethereumjs-abi.git",
     "ethereumjs-block": "^2.1.0",
     "ethereumjs-util": "^5.2.0",
     "express": "~4.14.1",
@@ -21,13 +19,11 @@
     "moment": "^2.17.1",
     "morgan": "~1.7.0",
     "numeral": "^2.0.4",
-    "pug": "~2.0.0-beta10",
+    "pug": "2.0.3",
     "request": "^2.88.0",
     "serve-favicon": "~2.3.2",
-    "solc": "^0.4.9",
+    "solc": "^0.5.3",
     "string-similarity": "^1.1.0",
-    "tmp": "0.0.31",
-    "web3": "git+https://github.com:DAPowerPlay/web3.js.git#develop",
-    "yargs": "^7.0.1"
+    "web3": "git+https://github.com:DAPowerPlay/web3.js.git#develop"
   }
 }

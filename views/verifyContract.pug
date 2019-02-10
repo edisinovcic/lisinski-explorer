@@ -5,18 +5,18 @@ block content
   form(action="/contract/verify", method="post")
     .form-group
       label(for="contractAddress") Contract address
-      input.form-control#contractAddress(type="text", placeholder="0x...", name="contractAddress")
+      input.form-control#contractAddress(type="text", placeholder="0x...", name="contractAddress", value=contractAddress)
     .form-group
       label(for="contractName") Contract name
-      input.form-control#contractName(type="text", placeholder="", name="contractName")
+      input.form-control#contractName(type="text", placeholder="", name="contractName", value=contractName)
     .form-group
       label(for="contractSource") Contract Source
-      textarea.form-control#contractSource(rows=15, name="contractSource")
+      textarea.form-control#contractSource(rows=15, name="contractSource")=contractSource
     .form-group
       label(for="compilerVersion") Compiler Version
       select.form-control#compilerVersion(name="compilerVersion")
-        each version in versions
-          option #{version.path}
+        each release in versions
+          option(selected=release.longVersion === compilerVersion) #{release.longVersion}
     .form-group
       label.checkbox-inline
         input(type="checkbox", name="useOptimizations", checked)#useOptimizations
