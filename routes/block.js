@@ -49,7 +49,6 @@ router.get('/:block', function(req, res, next) {
     });
 
     block = format(block)
-    block.signerName = config.names[block.signer];
 
     res.render('block', { block: block });    
 

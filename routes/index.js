@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   
   var config = req.app.get('config');  
 
-  const provider = new Api.Provider.Http(config.rpc.parity);
+  const provider = new Api.Provider.Http(config.rpc.pantheon);
   const api = new Api(provider);
   
   api.eth.getBlockByNumber('latest', true).then((lastBlock) => {
@@ -40,7 +40,9 @@ router.get('/', function(req, res, next) {
             
           });
           block = format(block)
-          block.signerName = config.names[block.signer];
+          //block.signerName = config.names[block.signer];
+          //console.log(block.signerName)
+          //console.log(block.signer)
         });
         
         res.render('index', { blocks: blocks, txs: txs });
