@@ -4,7 +4,7 @@ MAINTAINER DPP <contact@dapowerplay.com>
 
 ARG NODE_ENV=dev
 
-RUN apk add --no-cache --virtual dep python make g++ git bash
+RUN apk update && apk upgrade && apk add --no-cache dep python make g++ git bash
 
 WORKDIR /usr/app
 
@@ -23,6 +23,8 @@ WORKDIR /usr/app
 COPY --from=builder /usr/app/node_modules/ ./node_modules
 
 COPY . .
+
+RUN mkdir data
 
 RUN chown -R node:node .
 

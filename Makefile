@@ -14,7 +14,7 @@ build:
 
 ## Build dev docker images
 release:
-	@docker build -f docker/Dockerfile --build-arg NODE_ENV=production --tag dapowerplay/goerli:latest .
+	@docker build --no-cache -f docker/Dockerfile --build-arg NODE_ENV=production --tag dapowerplay/goerli:latest .
 
 ## Show help screen.
 help:

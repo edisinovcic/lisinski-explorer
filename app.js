@@ -21,6 +21,16 @@ var db = level('./data');
 
 var app = express();
 
+//http://explorer.goerli.net/
+app.get('/.well-known/acme-challenge/t9Oh3DJwr9c6OK9HVhnDwWU_Q-PA1vqEuwqUZL4YTow', function (req,res,next) {
+  // body...
+  res.set('Content-Type', 'text/plain')
+  return res.send('t9Oh3DJwr9c6OK9HVhnDwWU_Q-PA1vqEuwqUZL4YTow.0LWbmBPWBk9DAMocbHBtlTWMhgZNy4iQHR9UmAhMZg0')
+
+  //res.render('stats');
+});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -58,13 +68,6 @@ app.use('/stats', function (req,res,next) {
   res.render('stats');
 });
 
-//http://explorer.goerli.net/
-app.get('/.well-known/acme-challenge/t9Oh3DJwr9c6OK9HVhnDwWU_Q-PA1vqEuwqUZL4YTow', function (req,res,next) {
-  // body...
-  res.set('Content-Type', 'text/plain')
-  res.send('t9Oh3DJwr9c6OK9HVhnDwWU_Q-PA1vqEuwqUZL4YTow.0LWbmBPWBk9DAMocbHBtlTWMhgZNy4iQHR9UmAhMZg0')
-  //res.render('stats');
-});
 
 
 // catch 404 and forward to error handler
