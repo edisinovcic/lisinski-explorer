@@ -43,6 +43,7 @@ app.locals.numeral = require('numeral');
 app.locals.ethformatter = require('./utils/ethformatter.js');
 app.locals.nameformatter = new(require('./utils/nameformatter.js'))(config);
 app.locals.nodeStatus = new(require('./utils/nodeStatus.js'))();
+require('./utils/blockListener');
 app.locals.config = config;
 
 app.use('/', index);

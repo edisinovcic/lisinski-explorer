@@ -3,7 +3,7 @@ extends layout
 block content
   .page-header
     h1
-      | Görli Explorer   
+      | Görli Explorer
       small A cross-client proof-of-authority ethereum testnet
   .page-boombox
       .row
@@ -28,7 +28,7 @@ block content
                               a.btn.btn-default.ctabuttons(href='http://stats.goerli.net/' role='button')
                                 span.glyphicon.glyphicon-globe(aria-hidden='true')
                                 |  EthStats
-                             
+
         .col-sm-3
                           .thumbnail
                             .caption
@@ -36,9 +36,9 @@ block content
                               a.btn.btn-default.ctabuttons(href='https://gitter.im/goerli' role='button')
                                 span.glyphicon.glyphicon-user(aria-hidden='true')
                                 |  Gitter
-     
 
-  div.col-sm-12 
+
+  div.col-sm-12
     h3 Recent blocks
     table.table
       thead
@@ -53,12 +53,12 @@ block content
           tr
             td
               a(href="/block/" + block.number) #{block.number}
-            td 
+            td
               a(href="/account/" + block.signer) #{block.signerName}
-            td #{moment(block.timestamp).format('lll')} (#{moment(block.timestamp).fromNow()})
+            td #{moment.unix(block.timestamp).format('lll')} (#{moment.unix(block.timestamp).fromNow()})
             td #{block.transactions.length}
             td #{block.uncles.length}
-  div.col-sm-12 
+  div.col-sm-12
     h3 Recent Transactions
     if txs.length === 0
       p No transactions during the last 10 blocks
@@ -71,4 +71,4 @@ block content
           for tx in txs
             tr
               td
-                a(href="/tx/" + tx) #{tx}
+                a(href="/tx/" + tx.hash) #{tx.hash}

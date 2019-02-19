@@ -1,4 +1,5 @@
 var web3 = require('web3')
+var redis = require('redis')
 var names = require('./names/names.json')
 const ethers = require('ethers')
 
@@ -14,6 +15,10 @@ var config = {
   get provider () {
     return new web3.providers.HttpProvider(this.rpc.parity)
   },
+  cache: process.env.CACHE_DRIVER || null,
+  redis: {
+    url: process.env.REDIS_URL
+  },
   providers: {},
   bootstrapUrl: process.env.BOOTSTRAP_URL || 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css',
   explorerName: 'Görli Block Explorer',
@@ -21,7 +26,14 @@ var config = {
   names: names
 }
 
-config.providers.parity = new ethers.providers.JsonRpcProvider(config.rpc.parity);
-config.providers.pantheon = new ethers.providers.JsonRpcProvider(config.rpc.pantheon);
+config.providers.parity = new ethers.providers.JsonRpcProvider(config.rpc.parity)
+config.providers.pantheon = new ethers.providers.JsonRpcProvider(config.rpc.pantheon)
+
+if (config.cache === 'redis') {
+  config.redis.client = redis.createClient(config.redis.url)
+  config.redis.client.on('error', function (error) {
+    console.log('Redis error: ' + error);
+  })
+}
 
 module.exports = config
