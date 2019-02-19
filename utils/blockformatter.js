@@ -1,7 +1,7 @@
 const utils = require('ethereumjs-util')
 const ethBlock = require('ethereumjs-block/from-rpc')
 const moment = require('moment');
-var config = new(require('../config.js'))();
+var config = require('../config.js');
 var Web3 = require('web3');
 
 var web3 = new Web3()
@@ -24,18 +24,18 @@ function formatBlock(block) {
         } else {
             block.nonce = '0x' + block.nonce.toString(16);
         }
-    
+
 
        block.signer = extractSigner(block);
 
-       block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64) 
+       block.extraDataVanity = '0x' + dataBuff.toString('hex').slice(0, 64)
        block.extraDataVanityToAscii = web3.toAscii(block.extraDataVanity)
 
        block.extraDataSeal = seal.toString('hex')
 
        block._extraextra = dataBuff.slice(32,dataBuff.length - 65).toString('hex')
-    
-       return block 
+
+       return block
 }
 
 function extractSigner(block_) {
@@ -54,7 +54,7 @@ function extractSigner(block_) {
     return undefined
   var sig = utils.fromRpcSig('0x' + sealers.substring(sealers.length - 130, sealers.length)) // remove signature
   block.extraData = block.extraData.substring(0, block.extraData.length - 130)
-  
+
   var blk = ethBlock(block)
 
   blk.header.difficulty[0] = block.difficulty
@@ -68,7 +68,7 @@ function extractSigner(block_) {
     address = ''
   }
   return address;
-  
+
 }
 
 module.exports = formatBlock;
