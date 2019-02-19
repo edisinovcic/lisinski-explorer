@@ -1,4 +1,5 @@
 const utils = require('ethereumjs-util')
+const etherUtils = require('ethers/utils')
 const ethBlock = require('ethereumjs-block/from-rpc')
 
 function formatBlock(block) {
@@ -6,7 +7,7 @@ function formatBlock(block) {
        const seal = dataBuff.slice(dataBuff.length - 65, dataBuff.length)
 
         block.mixHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
-        if(typeof block.nonce === 'undefined' || block.nonce.toString(16) === '0') {
+        if(!block.nonce) {
             block.nonce = '0x0000000000000000'
         } else {
             block.nonce = '0x' + block.nonce.toString(16);
@@ -21,7 +22,7 @@ function formatBlock(block) {
        block.extraDataSeal = seal.toString('hex')
 
        block._extraextra = dataBuff.slice(32,dataBuff.length - 65).toString('hex')
-       block.number = parseInt(block.number, 16)
+       block.number = etherUtils.bigNumberify(block.number).toNumber()
        return block
 }
 
@@ -29,7 +30,6 @@ function extractSigner(block_) {
 
 
   var block = Object.assign({}, block_);
-  block.timestamp = parseInt(block.timestamp, 16)
 
   var sealers = block.extraData
   if (sealers.length <= 130)
