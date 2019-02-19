@@ -40,7 +40,6 @@ router.get('/:block', function (req, res, next) {
         }
         // console.log(tx);
       })
-      console.log('formating')
       try {
         block = format(block)
         block.signerName = config.names[block.signer]
