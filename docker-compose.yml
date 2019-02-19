@@ -17,7 +17,7 @@ services:
       - ${SERVER_HOST_PORT-3000}:3000
     environment:
       - CACHE_DRIVER=${CACHE_DRIVER:-redis}
-      - REDIS_URL=${REDIS_URL:-http://redis:6379}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
 
   parity-rpc:
     image: nodefactory/parity-goerly:alpine-clique-v5
