@@ -10,7 +10,6 @@ var parity = config.providers.parity
 router.get('/', function (req, res, next) {
 
   blocks.count().then(function (cachedBlocksCount) {
-    console.log({cachedBlocksCount})
     if (cachedBlocksCount !== 10) {
       blocks.recent().then(function (blocks) {
         var txs = []
