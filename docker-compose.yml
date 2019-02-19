@@ -30,6 +30,8 @@ services:
     volumes:
       - pantheon-chain-data:/var/lib/pantheon
 
+  redis:
+    image: redis:5-alpine
 
 volumes:
   explorer-node-modules:
