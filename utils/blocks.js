@@ -18,7 +18,7 @@ function clear () {
 }
 
 function count () {
-  if (!redis) return
+  if (!redis) return 0;
   return asyncCommand('llen')(RECENT_BLOCKS_KEY)
 }
 
