@@ -1,4 +1,4 @@
-var config = require('../config')
+var config = require('../../config')
 var { promisify } = require('util')
 var redis = config.redis.client
 

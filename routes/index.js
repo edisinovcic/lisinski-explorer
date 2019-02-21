@@ -4,7 +4,7 @@ var express = require('express')
 var router = express.Router()
 var utils = require('ethers/utils')
 var config = require('../config')
-var blocks = require('../utils/blocks')
+var blocks = require('../utils/cache/blocks')
 var parity = config.providers.parity
 
 router.get('/', function (req, res, next) {

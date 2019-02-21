@@ -1,5 +1,5 @@
 var config = require('../config')
-var blocks = require('./blocks')
+var blocks = require('./cache/blocks')
 
 var utils = require('ethers/utils')
 
