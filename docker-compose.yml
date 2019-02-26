@@ -16,7 +16,8 @@ services:
     ports:
       - ${SERVER_HOST_PORT-3000}:3000
     environment:
-      - DEBUG=*
+      - CACHE_DRIVER=${CACHE_DRIVER:-redis}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
 
   parity-rpc:
     image: nodefactory/parity-goerly:alpine-clique-v5
@@ -30,6 +31,8 @@ services:
     volumes:
       - pantheon-chain-data:/var/lib/pantheon
 
+  redis:
+    image: redis:5-alpine
 
 volumes:
   explorer-node-modules:
