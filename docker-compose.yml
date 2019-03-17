@@ -33,8 +33,12 @@ services:
 
   redis:
     image: redis:5-alpine
+    command: --appendonly yes
+    volumes:
+      - redis-data:/data
 
 volumes:
   explorer-node-modules:
   parity-chain-data:
   pantheon-chain-data:
+  redis-data:
