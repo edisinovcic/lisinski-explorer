@@ -56,7 +56,6 @@ class BlockIndexer {
   }
 
   async indexBlock (block) {
-
     const accounts = {}
     block.transactions.forEach((tx) => {
       if (tx.from) {
