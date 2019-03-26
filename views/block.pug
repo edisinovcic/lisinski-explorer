@@ -4,7 +4,7 @@ block content
   br
   .row
     .col-md-1
-      a.btn.btn-default(href="/block/" + (block.number.toNumber() - 1), role="button") Previous
+      a.btn.btn-default(href="/block/" + (block.number - 1), role="button") Previous
     .col-md-10.text-center.spaceout
       h3 Block #{block.number}
       if block._extraextra.length
@@ -13,23 +13,23 @@ block content
 
 
     .col-md-1
-      a.btn.btn-default(href="/block/" + (block.number.toNumber() + 1), role="button") Next
+      a.btn.btn-default(href="/block/" + (block.number + 1), role="button") Next
 
   table.table.table-hover
     tr
       td Hash:
       td #{block.hash}
     tr
-      td Parent hash: 
-      td 
-        a(href="/block/" + (block.number.toNumber() - 1)) #{block.parentHash}
+      td Parent hash:
+      td
+        a(href="/block/" + (block.number- 1)) #{block.parentHash}
     tr
-      td Signer: 
-      td  
+      td Signer:
+      td
         a(href="/account/" + block.signer) #{nameformatter.format(block.signer)}
     tr
-      td Beneficiary: 
-      td  
+      td Beneficiary:
+      td
         a(href="/account/" + block.miner) #{nameformatter.format(block.miner)}
     tr
       td Extra Data (Vanity):
@@ -39,8 +39,8 @@ block content
       td #{block.extraDataVanityToAscii}
     if block._extraextra.length
       tr
-        td Extra Data (Signer list): 
-        td #{block._extraextra} 
+        td Extra Data (Signer list):
+        td #{block._extraextra}
     tr
       td Extra Data (Seal):
       td #{block.extraDataSeal}
@@ -64,7 +64,7 @@ block content
       td #{numeral(block.totalDifficulty).format()}
     tr
       td Timestamp:
-      td #{moment(block.timestamp).format('MMMM Do YYYY, h:mm:ss a')} (#{moment(block.timestamp).fromNow()})
+      td #{moment.unix(block.timestamp).format('MMMM Do YYYY, h:mm:ss a')} (#{moment.unix(block.timestamp).fromNow()})
     tr
       td Size:
       td #{numeral(block.size).format()}
@@ -118,7 +118,7 @@ block content
               if trace.type === "call"
                 td
                   a(href="/account/" + trace.action.from) #{nameformatter.format(trace.action.from)}
-                td 
+                td
                   a(href="/account/" + trace.action.to) #{nameformatter.format(trace.action.to)}
                 td #{ethformatter(trace.action.value)}
               else if trace.type === "create"
