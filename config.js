@@ -26,7 +26,6 @@ var config = {
 }
 
 config.providers.parity = new ethers.providers.JsonRpcProvider(config.rpc.parity)
-config.providers.pantheon = new ethers.providers.JsonRpcProvider(config.rpc.pantheon)
 
 if (config.cache === 'redis') {
   config.redis.client = redis.createClient(config.redis.url)

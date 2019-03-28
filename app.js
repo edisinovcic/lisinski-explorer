@@ -28,7 +28,7 @@ app.set('config', config);
 app.set('db', db);
 app.set('trust proxy', true);
 
-app.use(favicon(path.join(__dirname, 'public/favicon', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/favicon', 'lis.png')));
 app.use(logger(config.logFormat));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
