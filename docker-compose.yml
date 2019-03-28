@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  goerli-explorer:
+  lisinski-explorer:
     restart: on-failure
     build:
       context: .
